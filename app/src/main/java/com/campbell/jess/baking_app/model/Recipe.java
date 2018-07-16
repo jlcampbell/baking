@@ -1,14 +1,16 @@
 package com.campbell.jess.baking_app.model;
 
+import org.json.JSONArray;
+
 public class Recipe {
     private int mId;
     private String mName;
-    private Object[] mIngredients;
-    private Object[] mSteps;
+    private JSONArray mIngredients;
+    private JSONArray mSteps;
     private int mNumberOfSteps;
     private String mImgUrl;
 
-    public Recipe(int id, String name, Object[] ingredients, Object[] steps, int numberOfSteps, String url){
+    public Recipe(int id, String name, JSONArray ingredients, JSONArray steps, int numberOfSteps, String url){
         this.mId = id;
         this.mName = name;
         this.mIngredients = ingredients;
@@ -23,10 +25,10 @@ public class Recipe {
     public String getName(){
         return mName;
     }
-    public Object[] getIngredients(){
+    public JSONArray getIngredients(){
         return mIngredients;
     }
-    public Object[] getSteps(){
+    public JSONArray getSteps(){
         return mSteps;
     }
     public int getNumberOfSteps(){

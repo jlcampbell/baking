@@ -17,8 +17,8 @@ public class recipeUtils {
 
     private static int RECIPE_ID;
     private static String RECIPE_NAME;
-    private static Object[] RECIPE_INGREDIENTS;
-    private static Object[] RECIPE_STEPS;
+    private static JSONArray RECIPE_INGREDIENTS;
+    private static JSONArray RECIPE_STEPS;
     private static int RECIPE_SERVINGS;
     private static String RECIPE_IMG_URL;
 
@@ -35,25 +35,22 @@ public class recipeUtils {
      * @throws JSONException
      */
 
-    public static String[] getRecipes(Context context, String bakingJson) throws JSONException {
+    public static Recipe[] getRecipes(Context context, String bakingJson) throws JSONException {
         JSONArray bakingJsonArray = new JSONArray(bakingJson);
         Recipe[] recipes = new Recipe[Objects.requireNonNull(bakingJsonArray).length()];
 
         for(int i=0; i<bakingJsonArray.length(); i++){
             JSONObject recipe = bakingJsonArray.getJSONObject(i);
-            try{
-                int id = recipe.getInt(context.getResources().)
-            }
 
+                RECIPE_ID = recipe.getInt(context.getString(R.string.id));
+                RECIPE_NAME = recipe.getString(context.getString(R.string.name));
+                RECIPE_INGREDIENTS = recipe.getJSONArray(context.getString(R.string.ingredients));
+                RECIPE_STEPS = recipe.getJSONArray(context.getString(R.string.steps));
+                RECIPE_SERVINGS = recipe.getInt(context.getString(R.string.servings));
+                RECIPE_IMG_URL = recipe.getString(context.getString(R.string.imageUrl));
 
-
-
-
-
-
-
-
+                recipes[i] = new Recipe(RECIPE_ID, RECIPE_NAME, RECIPE_INGREDIENTS, RECIPE_STEPS, RECIPE_SERVINGS, RECIPE_IMG_URL);
         }
-
+        return recipes;
     }
     }

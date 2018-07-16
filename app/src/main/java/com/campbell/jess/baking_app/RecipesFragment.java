@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.campbell.jess.baking_app.dummy.DummyContent;
 import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
+import com.campbell.jess.baking_app.model.Recipe;
 
 /**
  * A fragment representing a list of Items.
@@ -59,6 +60,7 @@ public class RecipesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -69,6 +71,8 @@ public class RecipesFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            //recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }
@@ -105,8 +109,7 @@ public class RecipesFragment extends Fragment {
      */
 
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Recipe recipe);
     }
 
 }

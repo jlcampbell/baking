@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.campbell.jess.baking_app.RecipesFragment.OnListFragmentInteractionListener;
 import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
+import com.campbell.jess.baking_app.model.Recipe;
 
 import java.util.List;
 
@@ -18,11 +19,12 @@ import java.util.List;
  */
 public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    //private final List<DummyItem> mValues;
+    private final List<Recipe> recipes;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyRecipeRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyRecipeRecyclerViewAdapter(List<Recipe> items, OnListFragmentInteractionListener listener) {
+        recipes = items;
         mListener = listener;
     }
 
@@ -35,9 +37,9 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mRecipe = recipes.get(position);
+        holder.mIdView.setText(recipes.get(position).getId());
+        holder.mContentView.setText(recipes.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +47,7 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mRecipe);
                 }
             }
         });
@@ -53,14 +55,14 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return recipes.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Recipe mRecipe;
 
         public ViewHolder(View view) {
             super(view);
