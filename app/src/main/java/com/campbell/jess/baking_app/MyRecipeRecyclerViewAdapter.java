@@ -13,17 +13,17 @@ import com.campbell.jess.baking_app.model.Recipe;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Recipe} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRecyclerViewAdapter.ViewHolder> {
 
     //private final List<DummyItem> mValues;
-    private final List<Recipe> recipes;
+    private final Recipe[] recipes;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyRecipeRecyclerViewAdapter(List<Recipe> items, OnListFragmentInteractionListener listener) {
+    public MyRecipeRecyclerViewAdapter(Recipe[] items, OnListFragmentInteractionListener listener) {
         recipes = items;
         mListener = listener;
     }
@@ -37,9 +37,9 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mRecipe = recipes.get(position);
-        holder.mIdView.setText(recipes.get(position).getId());
-        holder.mContentView.setText(recipes.get(position).getName());
+        holder.mRecipe = recipes[position];
+        holder.mIdView.setText(recipes[position].getId());
+        holder.mContentView.setText(recipes[position].getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +55,12 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
 
     @Override
     public int getItemCount() {
-        return recipes.size();
+        if (recipes != null){
+            return recipes.length;
+        } else {
+            return 0;
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

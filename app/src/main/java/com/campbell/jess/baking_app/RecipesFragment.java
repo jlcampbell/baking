@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.campbell.jess.baking_app.dummy.DummyContent;
 import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
 import com.campbell.jess.baking_app.model.Recipe;
+import com.campbell.jess.baking_app.recipe_data.baking_data_utils;
 
 /**
  * A fragment representing a list of Items.
@@ -27,6 +28,8 @@ public class RecipesFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+    private Recipe[] recipes;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,7 +52,7 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        recipes=baking_data_utils.getBakingData(getContext());
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -70,7 +73,7 @@ public class RecipesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(recipes, mListener));
 
             //recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }

@@ -12,10 +12,10 @@ public class baking_data_utils {
     private JSONObject[] jsonObject;
     private Context mContext;
     private String[] titles;
-    private Recipe[] recipes;
+    private static Recipe[] recipes;
     private String[] imgUrls;
 
-    public void getBakingData(Context context){
+    public static Recipe[] getBakingData(Context context){
         String bakingJson = context.getResources().getString(R.string.baking_json);
         try {
             //JSONArray bakingJsonArray = new JSONArray(bakingJson);
@@ -23,6 +23,7 @@ public class baking_data_utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return recipes;
         }
 
 }
