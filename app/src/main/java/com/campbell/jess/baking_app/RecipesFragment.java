@@ -76,17 +76,18 @@ public class RecipesFragment extends Fragment {
 
     public void loadRecipes(){
         Log.d(TAG, "loadRecipes: loading recipes");
-        mService.getRecipes().enqueue(new Callback<Recipe>() {
+        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
             @Override
-            public void onResponse(Call<Recipe> call, Response<Recipe> response) {
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 if(response.isSuccessful()){
-                    //mAdapter.updateRecipes(response.body().));
-
+                    //TODO iterate through response.body to populate a list or something that can
+                    mAdapter.updateRecipes(response.body());
+                    Log.d(TAG, "success");
                 }
             }
 
             @Override
-            public void onFailure(Call<Recipe> call, Throwable t) {
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
                 Log.d(TAG, "failure");
             }
         });
