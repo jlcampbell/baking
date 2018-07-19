@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.campbell.jess.baking_app.R;
-import com.campbell.jess.baking_app.model.Recipe;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,14 +33,14 @@ public class recipeUtils {
      * @return a list of recipe objects
      * @throws JSONException
      */
-
+/**
     public static Recipe[] getRecipes(Context context, String bakingJson) throws JSONException {
         JSONArray bakingJsonArray = new JSONArray(bakingJson);
         Log.d(TAG, String.valueOf(bakingJson.length()));
         Recipe[] recipes = new Recipe[bakingJson.()];
 
         for(int i=0; i<bakingJson.length(); i++){
-            /**
+
             JSONObject recipe = bakingJson.getJSONObject(i);
 
                RECIPE_ID = recipe.getInt(context.getString(R.string.id));
@@ -52,8 +51,9 @@ public class recipeUtils {
                 RECIPE_IMG_URL = recipe.getString(context.getString(R.string.imageUrl));
 
                 recipes[i] = new Recipe(RECIPE_ID, RECIPE_NAME, RECIPE_INGREDIENTS, RECIPE_STEPS, RECIPE_SERVINGS, RECIPE_IMG_URL);
-        **/
+
              }
         return recipes;
     }
+                **/
     }

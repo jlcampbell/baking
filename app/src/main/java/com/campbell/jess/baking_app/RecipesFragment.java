@@ -6,14 +6,27 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 
+import com.campbell.jess.baking_app.data.model.Recipe;
+
+import com.campbell.jess.baking_app.data.remote.ApiUtils;
+import com.campbell.jess.baking_app.data.remote.RecipeService;
 import com.campbell.jess.baking_app.dummy.DummyContent;
 import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
-import com.campbell.jess.baking_app.model.Recipe;
-import com.campbell.jess.baking_app.recipe_data.baking_data_utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A fragment representing a list of Items.
@@ -28,8 +41,8 @@ public class RecipesFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
-    private Recipe[] recipes;
+    private RecipeService mService;
+    private MyRecipeRecyclerViewAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -52,10 +65,31 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recipes=baking_data_utils.getBakingData(getContext());
+        //recipes=baking_data_utils.getBakingData(getContext());
+        mService = ApiUtils.getRecipeService();
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        loadRecipes();
+    }
+
+    public void loadRecipes(){
+        Log.d(TAG, "loadRecipes: loading recipes");
+        mService.getRecipes().enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(Call<Recipe> call, Response<Recipe> response) {
+                if(response.isSuccessful()){
+                    //mAdapter.updateRecipes(response.body().));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Recipe> call, Throwable t) {
+                Log.d(TAG, "failure");
+            }
+        });
     }
 
     @Override
@@ -73,7 +107,8 @@ public class RecipesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(recipes, mListener));
+            mAdapter = new MyRecipeRecyclerViewAdapter(new ArrayList<Recipe>(0), mListener);
+            recyclerView.setAdapter(mAdapter);
 
             //recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }

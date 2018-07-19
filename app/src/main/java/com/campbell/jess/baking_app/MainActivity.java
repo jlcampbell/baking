@@ -4,8 +4,11 @@ import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.campbell.jess.baking_app.data.model.Recipe;
 import com.campbell.jess.baking_app.dummy.DummyContent;
-import com.campbell.jess.baking_app.model.Recipe;
+
+
+import org.json.JSONArray;
 
 public class MainActivity extends AppCompatActivity implements RecipesFragment.OnListFragmentInteractionListener {
 
@@ -14,6 +17,8 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         RecipesFragment recipesFragment = new RecipesFragment();
 
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -21,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
                 .add(R.id.recipes_container, recipesFragment)
                 .commit();
     }
+
+
 
     @Override
     public void onListFragmentInteraction(Recipe recipe) {

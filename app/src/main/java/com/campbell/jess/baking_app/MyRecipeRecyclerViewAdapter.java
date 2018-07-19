@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.campbell.jess.baking_app.RecipesFragment.OnListFragmentInteractionListener;
+import com.campbell.jess.baking_app.data.model.Recipe;
+
 import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
-import com.campbell.jess.baking_app.model.Recipe;
 
 import java.util.List;
 
@@ -20,11 +21,11 @@ import java.util.List;
 public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRecyclerViewAdapter.ViewHolder> {
 
     //private final List<DummyItem> mValues;
-    private final Recipe[] recipes;
+    private  List<Recipe> mRecipes;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyRecipeRecyclerViewAdapter(Recipe[] items, OnListFragmentInteractionListener listener) {
-        recipes = items;
+    public MyRecipeRecyclerViewAdapter(List<Recipe> recipes, OnListFragmentInteractionListener listener) {
+        mRecipes = recipes;
         mListener = listener;
     }
 
@@ -35,11 +36,16 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
         return new ViewHolder(view);
     }
 
+    public void updateRecipes(List<Recipe> recipes) {
+        mRecipes = recipes;
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mRecipe = recipes[position];
-        holder.mIdView.setText(recipes[position].getId());
-        holder.mContentView.setText(recipes[position].getName());
+        Recipe recipe = mRecipes.get(position);
+        holder.mIdView.setText(recipe.getId());
+        holder.mContentView.setText(recipe.getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,8 +61,8 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
 
     @Override
     public int getItemCount() {
-        if (recipes != null){
-            return recipes.length;
+        if (mRecipes != null){
+            return mRecipes.size();
         } else {
             return 0;
         }
