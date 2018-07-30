@@ -43,7 +43,7 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Recipe recipe = mRecipes.get(position);
         //holder.mIdView.setText(recipe.getId());
         holder.mContentView.setText(recipe.getName());
@@ -54,7 +54,7 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mRecipe);
+                    mListener.onListFragmentInteraction(position);
                     Log.d(TAG, "onClick: click");
                 }
             }

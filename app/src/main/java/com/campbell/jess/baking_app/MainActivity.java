@@ -1,6 +1,7 @@
 package com.campbell.jess.baking_app;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +32,16 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
 
 
     @Override
-    public void onListFragmentInteraction(Recipe recipe) {
-        Log.d(TAG, "click" + recipe.getName());
+    public void onListFragmentInteraction(int recipeIndex) {
+        Log.d(TAG, "click" + recipeIndex);
+        //make a bundle with the position
+        Bundle b = new Bundle();
+        b.putInt("recipe", recipeIndex);
+
+        //make an intent, add bundle to the event
+        final Intent intent = new Intent(this, StepsActivity.class);
+        intent.putExtras(b);
+        startActivity(intent);
+
     }
 }

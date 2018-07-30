@@ -48,7 +48,7 @@ public class RecipesFragment extends Fragment {
     private MyRecipeRecyclerViewAdapter mAdapter;
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Recipe recipe);
+        void onListFragmentInteraction(int position);
     }
 
     /**
