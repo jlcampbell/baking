@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 
 import com.campbell.jess.baking_app.data.model.Recipe;
 
@@ -40,9 +41,15 @@ public class RecipesFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+
     private OnListFragmentInteractionListener mListener;
+
     private RecipeService mService;
     private MyRecipeRecyclerViewAdapter mAdapter;
+
+    public interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(Recipe recipe);
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -109,8 +116,21 @@ public class RecipesFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             mAdapter = new MyRecipeRecyclerViewAdapter(new ArrayList<Recipe>(0), mListener);
-            recyclerView.setAdapter(mAdapter);
 
+            //set the adapter on the rv
+            recyclerView.setAdapter(mAdapter);
+/**
+            recyclerView.setOnClickListener(new AdapterView.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    if (view instanceof )
+                    mListener.onListFragmentInteraction();
+                }
+
+
+            });
+ **/
             //recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
@@ -147,8 +167,6 @@ public class RecipesFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Recipe recipe);
-    }
+
 
 }

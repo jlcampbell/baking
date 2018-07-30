@@ -1,6 +1,7 @@
 package com.campbell.jess.baking_app;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,10 @@ import java.util.List;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Recipe} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ *
  */
 public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRecyclerViewAdapter.ViewHolder> {
-
+    private String TAG = "rv adapter";
     //private final List<DummyItem> mValues;
     private  List<Recipe> mRecipes;
     private final OnListFragmentInteractionListener mListener;
@@ -54,6 +55,7 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mRecipe);
+                    Log.d(TAG, "onClick: click");
                 }
             }
         });

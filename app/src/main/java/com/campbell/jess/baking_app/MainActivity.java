@@ -3,6 +3,7 @@ package com.campbell.jess.baking_app;
 import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.campbell.jess.baking_app.data.model.Recipe;
 import com.campbell.jess.baking_app.dummy.DummyContent;
@@ -11,13 +12,13 @@ import com.campbell.jess.baking_app.dummy.DummyContent;
 import org.json.JSONArray;
 
 public class MainActivity extends AppCompatActivity implements RecipesFragment.OnListFragmentInteractionListener {
+    private String TAG = "main activity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         RecipesFragment recipesFragment = new RecipesFragment();
 
@@ -31,6 +32,6 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
 
     @Override
     public void onListFragmentInteraction(Recipe recipe) {
-
+        Log.d(TAG, "click" + recipe.getName());
     }
 }
