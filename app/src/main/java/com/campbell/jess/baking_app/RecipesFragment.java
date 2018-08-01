@@ -37,9 +37,9 @@ import static android.content.ContentValues.TAG;
  */
 public class RecipesFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
+
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
 
     private OnListFragmentInteractionListener mListener;
@@ -58,9 +58,6 @@ public class RecipesFragment extends Fragment {
     public RecipesFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-
     public static RecipesFragment newInstance(int columnCount) {
         RecipesFragment fragment = new RecipesFragment();
         Bundle args = new Bundle();
@@ -72,7 +69,6 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //recipes=baking_data_utils.getBakingData(getContext());
         mService = ApiUtils.getRecipeService();
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -87,7 +83,6 @@ public class RecipesFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 if(response.isSuccessful()){
-                    //TODO iterate through response.body to populate a list or something that can
                     mAdapter.updateRecipes(response.body());
                     Log.d(TAG, "success");
                 }
@@ -119,19 +114,6 @@ public class RecipesFragment extends Fragment {
 
             //set the adapter on the rv
             recyclerView.setAdapter(mAdapter);
-/**
-            recyclerView.setOnClickListener(new AdapterView.OnClickListener(){
-
-                @Override
-                public void onClick(View view) {
-                    if (view instanceof )
-                    mListener.onListFragmentInteraction();
-                }
-
-
-            });
- **/
-            //recyclerView.setAdapter(new MyRecipeRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }

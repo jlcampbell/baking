@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRecyclerViewAdapter.ViewHolder> {
     private String TAG = "rv adapter";
-    //private final List<DummyItem> mValues;
     private  List<Recipe> mRecipes;
     private final OnListFragmentInteractionListener mListener;
 
@@ -45,7 +44,6 @@ public class MyRecipeRecyclerViewAdapter extends RecyclerView.Adapter<MyRecipeRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Recipe recipe = mRecipes.get(position);
-        //holder.mIdView.setText(recipe.getId());
         holder.mContentView.setText(recipe.getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
