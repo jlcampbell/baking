@@ -35,10 +35,11 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
 
         //make a bundle with the position
 //        Bundle b = new Bundle();
+//        b.putInt("recipe", recipeIndex);
 //        b.putInt("step", stepIndex);
 
         //make an intent, add bundle to the event
-//        final Intent intent = new Intent(this, StepsActivity.class);
+//        final Intent intent = new Intent(this, DetailsActivity.class);
 //        intent.putExtras(b);
 //        startActivity(intent);
     }
