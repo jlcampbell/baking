@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.campbell.jess.baking_app.data.model.Ingredient;
 import com.campbell.jess.baking_app.data.model.Recipe;
+import com.campbell.jess.baking_app.data.model.Step;
 import com.campbell.jess.baking_app.data.remote.ApiUtils;
 import com.campbell.jess.baking_app.data.remote.RecipeService;
 
@@ -26,7 +29,14 @@ import static android.content.ContentValues.TAG;
 
 public class StepsFragment extends Fragment {
     private RecipeService mService;
+    private StepRecyclerViewAdapter mAdapter;
+    private int mRecipeId;
 
+    private Recipe mRecipe;
+
+
+    private List<Ingredient> ingredientsList;
+    private TextView mIngredients;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -61,7 +71,7 @@ public class StepsFragment extends Fragment {
 
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            mAdapter = new StepRecyclerViewAdapter(new ArrayList<Recipe>(0), mListener);
+            mAdapter = new StepRecyclerViewAdapter(new ArrayList<Step>(0), mListener);
 
             //set the adapter on the rv
             recyclerView.setAdapter(mAdapter);
@@ -73,16 +83,33 @@ public class StepsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mService = ApiUtils.getRecipeService();
+        mIngredients = (TextView) getActivity().findViewById(R.id.tv_indredients);
         loadRecipes();
+
+    }
+
+    private void populateIngredientsTV(){
+        ingredientsList = mRecipe.getIngredients();
+        String ingredientString = "";
+        for (Ingredient ingredient: ingredientsList
+             ) {
+            ingredientString += ingredient.getIngredient();
+
+        }
+        Log.d("ingredients", ingredientString);
+        mIngredients.setText(ingredientString);
     }
 
     public void loadRecipes(){
         Log.d(TAG, "loadRecipes: loading recipes");
+
         mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 if(response.isSuccessful()){
-                    mAdapter.updateRecipes(response.body());
+                    mRecipe = response.body().get(mRecipeId);
+                    mAdapter.updateSteps(mRecipe.getSteps());
+                    populateIngredientsTV();
                     Log.d(TAG, "success");
                 }
             }
@@ -99,5 +126,7 @@ public class StepsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    public void setRecipeId(int recipeId) { mRecipeId = recipeId; }
 
 }
