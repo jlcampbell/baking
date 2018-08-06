@@ -10,7 +10,7 @@ import android.util.Log;
 public class StepsActivity extends AppCompatActivity implements StepsFragment.OnListFragmentInteractionListener {
 
     private static String TAG = "steps activity";
-
+    private int mRecipeId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +19,8 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
         if(savedInstanceState == null){
             StepsFragment stepsFragment = new StepsFragment();
 
-            int recipeId = getIntent().getIntExtra("recipe", 0);
-            stepsFragment.setRecipeId(recipeId);
+            mRecipeId = getIntent().getIntExtra("recipe", 0);
+            stepsFragment.setRecipeId(mRecipeId);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
@@ -34,13 +34,13 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
         Log.d(TAG, "click" + stepIndex);
 
         //make a bundle with the position
-//        Bundle b = new Bundle();
-//        b.putInt("recipe", recipeIndex);
-//        b.putInt("step", stepIndex);
+        Bundle b = new Bundle();
+        b.putInt("recipe", mRecipeId);
+        b.putInt("step", stepIndex);
 
         //make an intent, add bundle to the event
-//        final Intent intent = new Intent(this, DetailsActivity.class);
-//        intent.putExtras(b);
-//        startActivity(intent);
+        final Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 }
