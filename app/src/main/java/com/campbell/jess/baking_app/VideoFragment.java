@@ -4,52 +4,32 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.campbell.jess.baking_app.data.model.Recipe;
-import com.campbell.jess.baking_app.data.remote.ApiUtils;
-import com.campbell.jess.baking_app.data.remote.RecipeService;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DetailsFragment.OnFragmentInteractionListener} interface
+ * {@link VideoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DetailsFragment#newInstance} factory method to
+ * Use the {@link VideoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetailsFragment extends Fragment {
+public class VideoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_RECIPE = "recipe";
-    private static final String ARG_STEP = "step";
-
-    private RecipeService mService;
-    private Recipe mRecipe;
-
-    private TextView mRecipeDetailTV;
-    private TextView mIngredients;
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private int mRecipeId;
-    private int mStepId;
+    private String mParam1;
+    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public DetailsFragment() {
+    public VideoFragment() {
         // Required empty public constructor
     }
 
@@ -59,14 +39,14 @@ public class DetailsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailsFragment.
+     * @return A new instance of fragment VideoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailsFragment newInstance(int param1, int param2) {
-        DetailsFragment fragment = new DetailsFragment();
+    public static VideoFragment newInstance(String param1, String param2) {
+        VideoFragment fragment = new VideoFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_RECIPE, param1);
-        args.putInt(ARG_STEP, param2);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,31 +54,17 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mService = ApiUtils.getRecipeService();
         if (getArguments() != null) {
-            mRecipeId = getArguments().getInt(ARG_RECIPE);
-            mStepId = getArguments().getInt(ARG_STEP);
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        loadRecipes();
-
-        Log.d("oncreate", String.valueOf(mRecipeId));
-        Log.d("oncreate", String.valueOf(mStepId));
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle onSavedInstanceState){
-        super.onActivityCreated(onSavedInstanceState);
-        mRecipeDetailTV = (TextView) getActivity().findViewById(R.id.recipe_detail_instruction);
-
+        return inflater.inflate(R.layout.fragment_video, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -124,35 +90,6 @@ public class DetailsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
-    public void loadRecipes(){
-        Log.d(TAG, "loadRecipes: loading recipes");
-
-        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                if(response.isSuccessful()){
-                    mRecipe = response.body().get(mRecipeId);
-                    populateUI();
-                    Log.d(TAG, "success");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d(TAG, "failure");
-            }
-        });
-    }
-
-    public void populateUI(){
-
-        mRecipeDetailTV.setText(mRecipe.getSteps().get(mStepId).getDescription());
-    }
-
-
-
-
 
     /**
      * This interface must be implemented by activities that contain this
