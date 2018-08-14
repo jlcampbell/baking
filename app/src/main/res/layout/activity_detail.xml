@@ -6,7 +6,10 @@
     tools:context=".DetailsActivity">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/details_container"></FrameLayout>
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:id="@+id/video_container"></FrameLayout>
 </android.support.constraint.ConstraintLayout>

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 //this class only is used only for phones to display the details fragment
 //(on tablets the details fragment is displayed in the steps activity)
-public class DetailsActivity extends AppCompatActivity implements DetailsFragment.OnFragmentInteractionListener {
+public class DetailsActivity extends AppCompatActivity implements DetailsFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,12 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
             fragmentManager.beginTransaction()
                     .add(R.id.details_container, detailsFragment)
                     .commit();
+
+            VideoFragment videoFragment = VideoFragment.newInstance(recipeId, stepId, "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4");
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.video_container, videoFragment)
+                    .commit();
         }
     }
 
@@ -32,4 +38,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
 }
