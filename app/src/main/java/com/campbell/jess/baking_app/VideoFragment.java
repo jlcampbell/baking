@@ -1,5 +1,6 @@
 package com.campbell.jess.baking_app;
 
+import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -85,12 +86,8 @@ public class VideoFragment extends Fragment {
             mParam2 = getArguments().getInt(STEP_ID);
             mParam3 = getArguments().getString(STEP_VIDEO);
         }
-        mPlayerView = (PlayerView) getActivity().findViewById(R.id.pv_video);
+        //mPlayerView = (PlayerView) getActivity().findViewById(R.id.pv_video);
 
-        String videoUrl = mParam3;
-        Uri uri = Uri.parse(mParam3);
-
-        initializePlayer(uri);
     }
 
     /**
@@ -138,14 +135,19 @@ public class VideoFragment extends Fragment {
         releasePlayer();
     }
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_video, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle onSavedInstanceState){
+        super.onActivityCreated(onSavedInstanceState);
+        mPlayerView = getActivity().findViewById(R.id.pv_video);
+        Uri uri = Uri.parse(mParam3);
+        initializePlayer(uri);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
