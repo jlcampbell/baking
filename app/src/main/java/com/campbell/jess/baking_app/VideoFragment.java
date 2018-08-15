@@ -6,10 +6,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.campbell.jess.baking_app.data.model.Recipe;
+import com.campbell.jess.baking_app.data.remote.ApiUtils;
+import com.campbell.jess.baking_app.data.remote.RecipeService;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
@@ -29,6 +33,14 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,13 +56,16 @@ public class VideoFragment extends Fragment {
     private static final String STEP_ID = "stepID" ;
     private static final String STEP_VIDEO = "video";
 
+    private RecipeService mService;
+    private Recipe mRecipe;
+
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
 
 
-    private static int mParam1;
-    private static int mParam2;
-    private static String mParam3;
+    private static int mRecipeId;
+    private static int mStepId;
+    private static String mStepVideo;
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,8 +87,8 @@ public class VideoFragment extends Fragment {
         args.putInt(RECIPE_ID, param1);
         args.putInt(STEP_ID, param2);
         args.putString(STEP_VIDEO, param3);
-//        mParam1 = param1;
-//        mParam2 = param2;
+//        mRecipeId = param1;
+//        mStepId = param2;
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,13 +96,14 @@ public class VideoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mService = ApiUtils.getRecipeService();
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(RECIPE_ID);
-            mParam2 = getArguments().getInt(STEP_ID);
-            mParam3 = getArguments().getString(STEP_VIDEO);
+            mRecipeId = getArguments().getInt(RECIPE_ID);
+            mStepId = getArguments().getInt(STEP_ID);
+            mStepVideo = getArguments().getString(STEP_VIDEO);
         }
         //mPlayerView = (PlayerView) getActivity().findViewById(R.id.pv_video);
-
+        loadRecipes();
     }
 
     /**
@@ -146,8 +162,8 @@ public class VideoFragment extends Fragment {
     public void onActivityCreated(Bundle onSavedInstanceState){
         super.onActivityCreated(onSavedInstanceState);
         mPlayerView = getActivity().findViewById(R.id.pv_video);
-        Uri uri = Uri.parse(mParam3);
-        initializePlayer(uri);
+//        Uri uri = Uri.parse(mStepVideo);
+//        initializePlayer(uri);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -172,6 +188,32 @@ public class VideoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+//TODO : move load out of here, load only when app opens and attach room to access recipe
+    public void loadRecipes(){
+        Log.d(TAG, "loadRecipes: loading recipes");
+
+        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                if(response.isSuccessful()){
+                    mRecipe = response.body().get(mRecipeId);
+                    populateVideo();
+                    Log.d(TAG, "success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                Log.d(TAG, "failure");
+            }
+        });
+    }
+
+    public void populateVideo(){
+        mStepVideo = mRecipe.getSteps().get(mStepId).getVideoURL();
+        Uri uri = Uri.parse(mStepVideo);
+        initializePlayer(uri);
     }
 
     /**
