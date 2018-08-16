@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
 //this class only is used only for phones to display the details fragment
 //(on tablets the details fragment is displayed in the steps activity)
@@ -13,6 +14,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        Button nextButton = (Button) findViewById(R.id.btn_next);
+        Button previousButton = (Button) findViewById(R.id.btn_previous);
 
         if (savedInstanceState == null) {
             int recipeId = getIntent().getIntExtra("recipe", 0);
