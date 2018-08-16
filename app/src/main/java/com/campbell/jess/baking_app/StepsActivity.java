@@ -21,7 +21,9 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps);
 
-        if (findViewById(R.id.details_linear_layout) != null){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (findViewById(R.id.details_linear_layout) != null) {
             mTwoPane = true;
 
             int recipeId = getIntent().getIntExtra("recipe", 0);
@@ -30,7 +32,6 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
             //launch using step instructions string instead
             DetailsFragment detailsFragment = DetailsFragment.newInstance(recipeId, stepId);
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .add(R.id.details_container, detailsFragment)
                     .commit();
@@ -41,7 +42,7 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
                     .add(R.id.video_container, videoFragment)
                     .commit();
 
-
+        }
 
         if(savedInstanceState == null){
             StepsFragment stepsFragment = new StepsFragment();
@@ -49,27 +50,40 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
             mRecipeId = getIntent().getIntExtra("recipe", 0);
             stepsFragment.setRecipeId(mRecipeId);
 
-//            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .add(R.id.steps_container, stepsFragment)
                     .commit();
         }
-    }
+
     }
 
     @Override
     public void onListFragmentInteraction(int stepIndex) {
         Log.d(TAG, "click" + stepIndex);
 
-        //make a bundle with the position
-        Bundle b = new Bundle();
-        b.putInt("recipe", mRecipeId);
-        b.putInt("step", stepIndex);
+        //do different things depending on tablet/ phone
+        if(mTwoPane){
+            DetailsFragment newDetails = DetailsFragment.newInstance(mRecipeId, stepIndex);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.details_container, newDetails)
+                    .commit();
 
-        //make an intent, add bundle to the event
-        final Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtras(b);
-        startActivity(intent);
+            VideoFragment newVideo = VideoFragment.newInstance(mRecipeId, stepIndex, "");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.video_container, newVideo)
+                    .commit();
+
+        } else {
+            //make a bundle with the position
+            Bundle b = new Bundle();
+            b.putInt("recipe", mRecipeId);
+            b.putInt("step", stepIndex);
+
+            //make an intent, add bundle to the event
+            final Intent intent = new Intent(this, DetailsActivity.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        }
     }
 
     @Override
