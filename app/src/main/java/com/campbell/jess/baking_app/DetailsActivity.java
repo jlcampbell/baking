@@ -9,6 +9,9 @@ import android.widget.Button;
 //this class only is used only for phones to display the details fragment
 //(on tablets the details fragment is displayed in the steps activity)
 public class DetailsActivity extends AppCompatActivity implements DetailsFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener {
+    private int recipeId;
+    private int stepId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +22,8 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
         Button previousButton = (Button) findViewById(R.id.btn_previous);
 
         if (savedInstanceState == null) {
-            int recipeId = getIntent().getIntExtra("recipe", 0);
-            int stepId = getIntent().getIntExtra("step", 0);
+            recipeId = getIntent().getIntExtra("recipe", 0);
+            stepId = getIntent().getIntExtra("step", 0);
 
             //launch using step instructions string instead
             DetailsFragment detailsFragment = DetailsFragment.newInstance(recipeId, stepId);
