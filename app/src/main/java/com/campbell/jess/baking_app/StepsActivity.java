@@ -13,6 +13,8 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
     private static String TAG = "steps activity";
     private int mRecipeId;
 
+    private int mListSize;
+
     private boolean mTwoPane;
 
 
@@ -23,6 +25,7 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
+        //twopane
         if (findViewById(R.id.details_linear_layout) != null) {
             mTwoPane = true;
 
@@ -41,6 +44,8 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
             fragmentManager.beginTransaction()
                     .add(R.id.video_container, videoFragment)
                     .commit();
+
+        } else {
 
         }
 
@@ -78,6 +83,7 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
             Bundle b = new Bundle();
             b.putInt("recipe", mRecipeId);
             b.putInt("step", stepIndex);
+            b.putInt("listSize", mListSize);
 
             //make an intent, add bundle to the event
             final Intent intent = new Intent(this, DetailsActivity.class);
@@ -85,6 +91,12 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
             startActivity(intent);
         }
     }
+
+    @Override
+    public void listSize(int stepListSize) {
+        mListSize = stepListSize;
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {

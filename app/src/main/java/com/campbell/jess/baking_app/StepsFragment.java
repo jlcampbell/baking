@@ -34,6 +34,7 @@ public class StepsFragment extends Fragment {
 
     private Recipe mRecipe;
 
+    private int stepListSize;
 
     private List<Ingredient> ingredientsList;
     private TextView mIngredients;
@@ -42,6 +43,7 @@ public class StepsFragment extends Fragment {
 
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(int position);
+        void listSize(int stepListSize);
     }
 
 
@@ -75,6 +77,8 @@ public class StepsFragment extends Fragment {
 
             //set the adapter on the rv
             recyclerView.setAdapter(mAdapter);
+            //stepListSize = mAdapter.getItemCount();
+
         }
         return view;
     }
@@ -108,6 +112,9 @@ public class StepsFragment extends Fragment {
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 if(response.isSuccessful()){
                     mRecipe = response.body().get(mRecipeId);
+                    stepListSize = mRecipe.getSteps().size();
+                    mListener.listSize(stepListSize);
+
                     mAdapter.updateSteps(mRecipe.getSteps());
                     populateIngredientsTV();
                     Log.d(TAG, "success");
