@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:context=".StepsActivity">
+    tools:context=".ui.steps.StepsActivity">
     <TextView
         android:layout_width="200dp"
         android:layout_height="wrap_content"

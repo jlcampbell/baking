@@ -1,12 +1,13 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.steps.details;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import com.campbell.jess.baking_app.R;
 
 //this class only is used only for phones to display the details fragment
 //(on tablets the details fragment is displayed in the steps activity)

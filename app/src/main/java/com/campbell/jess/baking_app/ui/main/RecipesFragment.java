@@ -1,4 +1,4 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,15 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 
+import com.campbell.jess.baking_app.R;
 import com.campbell.jess.baking_app.data.model.Recipe;
 
 import com.campbell.jess.baking_app.data.remote.ApiUtils;
 import com.campbell.jess.baking_app.data.remote.RecipeService;
-import com.campbell.jess.baking_app.dummy.DummyContent;
-import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
 import java.util.List;

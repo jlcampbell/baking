@@ -1,9 +1,8 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.steps;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.campbell.jess.baking_app.R;
 import com.campbell.jess.baking_app.data.model.Ingredient;
 import com.campbell.jess.baking_app.data.model.Recipe;
 import com.campbell.jess.baking_app.data.model.Step;

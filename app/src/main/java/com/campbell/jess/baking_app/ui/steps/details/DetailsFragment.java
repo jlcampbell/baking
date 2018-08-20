@@ -1,4 +1,4 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.steps.details;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.campbell.jess.baking_app.R;
 import com.campbell.jess.baking_app.data.model.Recipe;
 import com.campbell.jess.baking_app.data.remote.ApiUtils;
 import com.campbell.jess.baking_app.data.remote.RecipeService;

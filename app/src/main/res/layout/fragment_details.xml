@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    tools:context="com.campbell.jess.baking_app.DetailsFragment">
+    tools:context="com.campbell.jess.baking_app.ui.steps.details.DetailsFragment">
 
     <TextView
         android:layout_width="match_parent"

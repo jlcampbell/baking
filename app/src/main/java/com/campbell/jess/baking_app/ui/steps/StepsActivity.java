@@ -1,4 +1,4 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.steps;
 
 
 import android.content.Intent;
@@ -7,6 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.campbell.jess.baking_app.R;
+
+import com.campbell.jess.baking_app.ui.steps.details.DetailsActivity;
+import com.campbell.jess.baking_app.ui.steps.details.DetailsFragment;
+import com.campbell.jess.baking_app.ui.steps.details.VideoFragment;
+
 //may contain two fragments
 public class StepsActivity extends AppCompatActivity implements StepsFragment.OnListFragmentInteractionListener, DetailsFragment.OnFragmentInteractionListener, VideoFragment.OnFragmentInteractionListener {
 

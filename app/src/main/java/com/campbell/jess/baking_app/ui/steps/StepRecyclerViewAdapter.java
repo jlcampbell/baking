@@ -1,4 +1,4 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.steps;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.campbell.jess.baking_app.data.model.Recipe;
+import com.campbell.jess.baking_app.R;
+
 import com.campbell.jess.baking_app.data.model.Step;
 
 import java.util.ArrayList;

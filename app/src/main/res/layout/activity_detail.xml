@@ -4,7 +4,7 @@
     android:layout_width="400dp"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DetailsActivity">
+    tools:context=".ui.steps.details.DetailsActivity">
     <LinearLayout
         android:id="@+id/details_linear_layout"
         android:layout_width="400dp"

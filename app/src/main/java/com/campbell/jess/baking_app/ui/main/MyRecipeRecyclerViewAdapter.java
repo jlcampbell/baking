@@ -1,4 +1,4 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.main;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.campbell.jess.baking_app.RecipesFragment.OnListFragmentInteractionListener;
+import com.campbell.jess.baking_app.R;
+import com.campbell.jess.baking_app.ui.main.RecipesFragment.OnListFragmentInteractionListener;
 import com.campbell.jess.baking_app.data.model.Recipe;
-
-import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
