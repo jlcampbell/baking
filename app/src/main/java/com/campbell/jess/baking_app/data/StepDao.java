@@ -1,6 +1,8 @@
 package com.campbell.jess.baking_app.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.campbell.jess.baking_app.data.model.Step;
@@ -13,9 +15,9 @@ import java.util.List;
 
 public interface StepDao {
     @Query("SELECT * FROM step_table")
-    List<Step> getAllSteps();
+    LiveData<List<Step>> getAllSteps();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Step step);
 
     @Query("DELETE FROM step_table")
