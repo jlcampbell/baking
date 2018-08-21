@@ -16,8 +16,6 @@ import com.campbell.jess.baking_app.data.model.Step;
 @Database(entities = {Recipe.class, Step.class, Ingredient.class}, version = 1)
 public abstract class RecipeRoomDatabase extends RoomDatabase {
     public abstract RecipeDao recipeDao();
-    public abstract StepDao stepDao();
-    public abstract IngredientDao ingredientDao();
 
     private static RecipeRoomDatabase INSTANCE;
 

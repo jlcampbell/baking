@@ -17,80 +17,78 @@ import java.util.List;
 //get the network data in here somewhere
 public class RecipeRepository {
     private RecipeDao mRecipeDao;
+    private final RecipeNetworkDataSource mRecipeNetworkDataSource;
+
+    private static final Object LOCK = new Object();
+
+    private final AppExecutors mExecutors;
+
+    private static RecipeRepository sInstance;
+
     private LiveData<List<Recipe>> mAllRecipes;
-
-    private StepDao mStepDao;
     private LiveData<List<Step>> mAllSteps;
-
-    private IngredientDao mIngredientDao;
     private LiveData<List<Ingredient>> mAllIngredients;
 
+    private boolean mInitialized;
 
-    RecipeRepository(Application application) {
+
+
+    private RecipeRepository(Application application, RecipeNetworkDataSource recipeNetworkDataSource, AppExecutors appExecutors) {
         RecipeRoomDatabase db = RecipeRoomDatabase.getDatabase(application);
         mRecipeDao = db.recipeDao();
-        mIngredientDao = db.ingredientDao();
-        mStepDao = db.stepDao();
+        mRecipeNetworkDataSource = recipeNetworkDataSource;
+        mExecutors = appExecutors;
+        mInitialized = false;
 
-        mAllRecipes = mRecipeDao.getAllRecipes();
-        mAllSteps = mStepDao.getAllSteps();
-        mAllIngredients = mIngredientDao.getAllIngredients();
-    }
+//        mAllRecipes = mRecipeDao.getAllRecipes();
+//        mAllSteps = mRecipeDao.getAllSteps();
+//        mAllIngredients = mRecipeDao.getAllIngredients();
 
-    //get live data
-    LiveData<List<Recipe>> getAllRecipes(){
-        return mAllRecipes;
-    }
-    LiveData<List<Step>> getAllSteps(){
-        return mAllSteps;
-    }
-    LiveData<List<Ingredient>> getAllIngredients(){
-        return mAllIngredients;
-    }
+        //get the data from the network data source and insert into DAO
+        LiveData<List<Recipe>> recipeNetworkData = mRecipeNetworkDataSource.getRecipes();
+        recipeNetworkData.observeForever(newRecipes -> {
+            mExecutors.diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    for (Recipe recipe: newRecipes
+                         ) {
+                        mRecipeDao.insert(recipe);
+                    }
+                }
+            });
 
-    //insert data into daos
-    private static class insertAsyncRecipe extends AsyncTask<Recipe, Void, Void> {
-        private RecipeDao mAsyncRecipeDao;
+        });
 
-        insertAsyncRecipe(RecipeDao dao) {
-            mAsyncRecipeDao = dao;
+    }
+    //get instance
+    public synchronized static RecipeRepository getInstance(Application application, RecipeNetworkDataSource recipeNetworkDataSource, AppExecutors appExecutors ){
+        if (sInstance == null){
+            synchronized (LOCK) {
+                sInstance = new RecipeRepository(application, recipeNetworkDataSource, appExecutors);
+            }
         }
-
-        @Override
-        protected Void doInBackground(final Recipe... params) {
-            mAsyncRecipeDao.insert(params[0]);
-            return null;
-        }
+        return sInstance;
     }
-    private static class insertAsyncStep extends AsyncTask<Step, Void, Void> {
-        private StepDao mAsyncStepDao;
 
-        insertAsyncStep(StepDao dao) {
-            mAsyncStepDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final Step... params) {
-            mAsyncStepDao.insert(params[0]);
-            return null;
-        }
-    }
-    private static class insertAsyncIngredient extends AsyncTask<Ingredient, Void, Void> {
-        private IngredientDao mAsyncIngredientDao;
-
-        insertAsyncIngredient(IngredientDao dao) {
-            mAsyncIngredientDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final Ingredient... params) {
-            mAsyncIngredientDao.insert(params[0]);
-            return null;
+    //initialize data - in this case only occurs once because data is static
+    private synchronized void initializeData() {
+        if (!mInitialized) {
+            mRecipeNetworkDataSource.loadRecipes();
+            mInitialized = true;
         }
     }
 
 
+    //database operations- called by view models to get recipes from DAO
+    public LiveData<List<Recipe>> getRecipes() {
+        initializeData();
+        return mRecipeDao.getAllRecipes();
+    }
+
+    }
 
 
 
-}
+
+
+

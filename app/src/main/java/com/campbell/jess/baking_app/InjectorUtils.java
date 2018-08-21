@@ -1,0 +1,29 @@
+package com.campbell.jess.baking_app;
+
+import android.app.Application;
+import android.content.Context;
+
+import com.campbell.jess.baking_app.data.AppExecutors;
+import com.campbell.jess.baking_app.data.RecipeNetworkDataSource;
+import com.campbell.jess.baking_app.data.RecipeRepository;
+import com.campbell.jess.baking_app.data.RecipeRoomDatabase;
+
+public class InjectorUtils {
+    private static String log_tag = "injectorUtils";
+    public static RecipeRepository provideRepository(Context context, Application application) {
+        AppExecutors executors = AppExecutors.getInstance();
+        RecipeNetworkDataSource networkDataSource = RecipeNetworkDataSource.getsInstance(context.getApplicationContext());
+        return RecipeRepository.getInstance(application, networkDataSource, executors);
+    }
+
+
+    public static MainActivityViewModelFactory provideMainActivityViewModelFactory(Context context, Application application) {
+        RecipeRepository recipeRepository = provideRepository(context, application);
+        return new MainActivityViewModelFactory(recipeRepository);
+    }
+
+//    public static DetailActivityViewModelFactory provideDetailActivityViewModelFactory(Context context, int id) {
+//        RecipeRepository recipeRepository = provideRepository(context.getApplicationContext());
+//        return new DetailActivityViewModelFactory(recipeRepository, id);
+//    }
+}

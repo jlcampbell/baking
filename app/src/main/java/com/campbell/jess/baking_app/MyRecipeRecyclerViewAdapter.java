@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.campbell.jess.baking_app.RecipesFragment.OnListFragmentInteractionListener;
 import com.campbell.jess.baking_app.data.model.Recipe;
 
-import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
-
 import java.util.List;
 
 /**

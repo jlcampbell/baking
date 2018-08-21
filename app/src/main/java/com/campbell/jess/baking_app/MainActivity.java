@@ -6,12 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.campbell.jess.baking_app.data.model.Recipe;
-import com.campbell.jess.baking_app.dummy.DummyContent;
-
-
-import org.json.JSONArray;
-
 public class MainActivity extends AppCompatActivity implements RecipesFragment.OnListFragmentInteractionListener {
     private String TAG = "main activity";
 
