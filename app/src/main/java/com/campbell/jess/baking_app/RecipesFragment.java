@@ -80,34 +80,14 @@ public class RecipesFragment extends Fragment {
         MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(getActivity(), getActivity().getApplication());
         mViewModel = ViewModelProviders.of(getActivity(), factory).get(MainActivityViewModel.class);
         loadRecipeDataFromViewModel();
-
-        //loadRecipes();
     }
 
     public void loadRecipeDataFromViewModel() {
         final Observer<List<Recipe>> recipeObserver= listLiveData -> {
             mAdapter.updateRecipes(listLiveData);
-
         };
+        mViewModel.getRecipes().observe(this, recipeObserver);
     }
-
-//    public void loadRecipes(){
-//        Log.d(TAG, "loadRecipes: loading recipes");
-//        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
-//            @Override
-//            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-//                if(response.isSuccessful()){
-//                    mAdapter.updateRecipes(response.body());
-//                    Log.d(TAG, "success");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-//                Log.d(TAG, "failure");
-//            }
-//        });
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

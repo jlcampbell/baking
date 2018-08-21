@@ -104,29 +104,29 @@ public class StepsFragment extends Fragment {
         mIngredients.setText(ingredientString);
     }
 
-    public void loadRecipes(){
-        Log.d(TAG, "loadRecipes: loading recipes");
-
-        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                if(response.isSuccessful()){
-                    mRecipe = response.body().get(mRecipeId);
-                    stepListSize = mRecipe.getSteps().size();
-                    mListener.listSize(stepListSize);
-
-                    mAdapter.updateSteps(mRecipe.getSteps());
-                    populateIngredientsTV();
-                    Log.d(TAG, "success");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d(TAG, "failure");
-            }
-        });
-    }
+//    public void loadRecipes(){
+//        Log.d(TAG, "loadRecipes: loading recipes");
+//
+//        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
+//            @Override
+//            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+//                if(response.isSuccessful()){
+//                    mRecipe = response.body().get(mRecipeId);
+//                    stepListSize = mRecipe.getSteps().size();
+//                    mListener.listSize(stepListSize);
+//
+//                    mAdapter.updateSteps(mRecipe.getSteps());
+//                    populateIngredientsTV();
+//                    Log.d(TAG, "success");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+//                Log.d(TAG, "failure");
+//            }
+//        });
+//    }
 
     @Override
     public void onDetach() {

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.campbell.jess.baking_app.data.model.Recipe;
+import com.campbell.jess.baking_app.data.remote.ApiUtils;
 import com.campbell.jess.baking_app.data.remote.RecipeService;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class RecipeNetworkDataSource {
 
     private RecipeNetworkDataSource(Context context){
         mContext = context;
-
+        mService = ApiUtils.getRecipeService();
         mDownloadedRecipes = new MutableLiveData<List<Recipe>>();
     }
 
@@ -66,12 +67,11 @@ public class RecipeNetworkDataSource {
                 Log.d(LOG_TAG, "made new network data source");
 
             }
-            if (sInstance != null) {
-                Log.d(LOG_TAG, "sInstance not null");
-            }
-            return sInstance;
         }
+        if (sInstance != null) {
+            Log.d(LOG_TAG, "sInstance not null");
+        }
+        return sInstance;
     }
-
 
 }

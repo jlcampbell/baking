@@ -7,8 +7,12 @@ package com.campbell.jess.baking_app.data.model;
 
         import android.arch.persistence.room.Entity;
         import android.arch.persistence.room.PrimaryKey;
+        import android.arch.persistence.room.TypeConverter;
+        import android.arch.persistence.room.TypeConverters;
 
         import java.util.List;
+
+        import com.campbell.jess.baking_app.data.RecipesTypeConverter;
         import com.google.gson.annotations.Expose;
         import com.google.gson.annotations.SerializedName;
 
@@ -29,6 +33,7 @@ public class Recipe {
 
     @SerializedName("steps")
     @Expose
+    @TypeConverters(RecipesTypeConverter.class)
     private List<Step> steps = null;
 
     @SerializedName("servings")

@@ -3,6 +3,8 @@ package com.campbell.jess.baking_app.data;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.campbell.jess.baking_app.data.model.Ingredient;
@@ -13,7 +15,8 @@ import com.campbell.jess.baking_app.data.model.Step;
  * Created by jlcampbell on 8/20/2018.
  */
 
-@Database(entities = {Recipe.class, Step.class, Ingredient.class}, version = 1)
+@Database(entities = {Recipe.class, Step.class, Ingredient.class}, version = 1, exportSchema = false)
+@TypeConverters({RecipesTypeConverter.class})
 public abstract class RecipeRoomDatabase extends RoomDatabase {
     public abstract RecipeDao recipeDao();
 
