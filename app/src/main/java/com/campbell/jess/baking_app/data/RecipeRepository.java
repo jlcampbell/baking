@@ -59,6 +59,9 @@ public class RecipeRepository {
 
         });
 
+
+
+
     }
     //get instance
     public synchronized static RecipeRepository getInstance(Application application, RecipeNetworkDataSource recipeNetworkDataSource, AppExecutors appExecutors ){
@@ -84,6 +87,12 @@ public class RecipeRepository {
         initializeData();
         return mRecipeDao.getAllRecipes();
     }
+
+    public LiveData<List<Step>> getStepsForRecipe(int recipeId) {
+        initializeData();
+        return mRecipeDao.getAllRecipes().getValue().get(recipeId);
+    }
+
 
     }
 

@@ -1,5 +1,6 @@
 package com.campbell.jess.baking_app;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import com.campbell.jess.baking_app.data.remote.RecipeService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +35,7 @@ public class StepsFragment extends Fragment {
     private int mRecipeId;
 
     private Recipe mRecipe;
+    private MainActivityViewModel mViewModel;
 
     private int stepListSize;
 
@@ -88,9 +91,19 @@ public class StepsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mService = ApiUtils.getRecipeService();
         mIngredients = (TextView) getActivity().findViewById(R.id.tv_indredients);
-        loadRecipes();
+        //loadRecipes();
+        MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(getActivity(), getActivity().getApplication());
+        mViewModel = ViewModelProviders.of(getActivity(), factory).get(MainActivityViewModel.class);
+        loadRecipeDataFromViewModel();
+    }
+
+    public void loadRecipeDataFromViewModel() {
+        final Observer<List<Recipe>> recipeOberserver= listLiveData -> {
+
+        };
 
     }
+
 
     private void populateIngredientsTV(){
         ingredientsList = mRecipe.getIngredients();
