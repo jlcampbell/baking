@@ -1,5 +1,5 @@
-# baking
-<h1>Baking App for Android</h1>
+# Baking App for Android
+
 <p>
 The baking app for android was written from scratch by Jessica Campbell to fulfill the requirements of the Udacity Grow with Google Nanodegree
 </p>
