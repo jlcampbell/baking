@@ -162,8 +162,6 @@ public class VideoFragment extends Fragment {
     public void onActivityCreated(Bundle onSavedInstanceState){
         super.onActivityCreated(onSavedInstanceState);
         mPlayerView = getActivity().findViewById(R.id.pv_video);
-//        Uri uri = Uri.parse(mStepVideo);
-//        initializePlayer(uri);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

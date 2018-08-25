@@ -1,5 +1,6 @@
 package com.campbell.jess.baking_app;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class DetailsFragment extends Fragment {
     private static final String ARG_STEP = "step";
 
     private RecipeService mService;
+    private SharedViewModel mViewModel;
     private Recipe mRecipe;
 
     private TextView mRecipeDetailTV;
@@ -80,7 +82,10 @@ public class DetailsFragment extends Fragment {
             mRecipeId = getArguments().getInt(ARG_RECIPE);
             mStepId = getArguments().getInt(ARG_STEP);
         }
-        loadRecipes();
+        SharedViewModelFactory factory = InjectorUtils.provideSharedActivityViewModelFactory(getContext(), mRecipeId, getActivity().getApplication() );
+        mViewModel = ViewModelProviders.of(getActivity(), factory).get(SharedViewModel.class);
+        loadRecipeDataFromViewModel();
+
 
         Log.d("oncreate", String.valueOf(mRecipeId));
         Log.d("oncreate", String.valueOf(mStepId));
@@ -125,23 +130,13 @@ public class DetailsFragment extends Fragment {
         mListener = null;
     }
 
-    public void loadRecipes(){
-        Log.d(TAG, "loadRecipes: loading recipes");
 
-        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                if(response.isSuccessful()){
-                    mRecipe = response.body().get(mRecipeId);
-                    populateUI();
-                    Log.d(TAG, "success");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d(TAG, "failure");
-            }
+    public void loadRecipeDataFromViewModel() {
+
+        mViewModel.getRecipe().observe(this, recipe -> {
+            mRecipe = recipe;
+            populateUI();
         });
     }
 

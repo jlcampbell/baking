@@ -22,8 +22,8 @@ public class InjectorUtils {
         return new MainActivityViewModelFactory(recipeRepository);
     }
 
-//    public static DetailActivityViewModelFactory provideDetailActivityViewModelFactory(Context context, int id) {
-//        RecipeRepository recipeRepository = provideRepository(context.getApplicationContext());
-//        return new DetailActivityViewModelFactory(recipeRepository, id);
-//    }
+    public static SharedViewModelFactory provideSharedActivityViewModelFactory(Context context, int id, Application application) {
+        RecipeRepository recipeRepository = provideRepository(context, application);
+        return new SharedViewModelFactory(recipeRepository, id);
+    }
 }

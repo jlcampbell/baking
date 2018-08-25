@@ -88,10 +88,10 @@ public class RecipeRepository {
         return mRecipeDao.getAllRecipes();
     }
 
-    public LiveData<List<Step>> getStepsForRecipe(int recipeId) {
+   public LiveData<Recipe> getRecipeById(int recipeId) {
         initializeData();
-        return mRecipeDao.getAllRecipes().getValue().get(recipeId);
-    }
+        return mRecipeDao.getRecipeById(recipeId);
+   }
 
 
     }

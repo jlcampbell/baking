@@ -35,7 +35,7 @@ public class StepsFragment extends Fragment {
     private int mRecipeId;
 
     private Recipe mRecipe;
-    private MainActivityViewModel mViewModel;
+    private SharedViewModel mViewModel;
 
     private int stepListSize;
 
@@ -80,7 +80,6 @@ public class StepsFragment extends Fragment {
 
             //set the adapter on the rv
             recyclerView.setAdapter(mAdapter);
-            //stepListSize = mAdapter.getItemCount();
 
         }
         return view;
@@ -91,19 +90,29 @@ public class StepsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mService = ApiUtils.getRecipeService();
         mIngredients = (TextView) getActivity().findViewById(R.id.tv_indredients);
-        //loadRecipes();
-        MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(getActivity(), getActivity().getApplication());
-        mViewModel = ViewModelProviders.of(getActivity(), factory).get(MainActivityViewModel.class);
+        SharedViewModelFactory factory = InjectorUtils.provideSharedActivityViewModelFactory(getContext(), mRecipeId, getActivity().getApplication() );
+        mViewModel = ViewModelProviders.of(getActivity(), factory).get(SharedViewModel.class);
         loadRecipeDataFromViewModel();
     }
 
     public void loadRecipeDataFromViewModel() {
-        final Observer<List<Recipe>> recipeOberserver= listLiveData -> {
 
-        };
-
+        mViewModel.getRecipe().observe(this, recipe -> {
+            mRecipe = recipe;
+            populateUI();
+        });
     }
 
+    private void populateUI(){
+        populateStepsRV();
+        populateIngredientsTV();
+    }
+
+    private void populateStepsRV(){
+        stepListSize = mRecipe.getSteps().size();
+        mListener.listSize(stepListSize);
+        mAdapter.updateSteps(mRecipe.getSteps());
+    }
 
     private void populateIngredientsTV(){
         ingredientsList = mRecipe.getIngredients();
@@ -116,30 +125,6 @@ public class StepsFragment extends Fragment {
         Log.d("ingredients", ingredientString);
         mIngredients.setText(ingredientString);
     }
-
-//    public void loadRecipes(){
-//        Log.d(TAG, "loadRecipes: loading recipes");
-//
-//        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
-//            @Override
-//            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-//                if(response.isSuccessful()){
-//                    mRecipe = response.body().get(mRecipeId);
-//                    stepListSize = mRecipe.getSteps().size();
-//                    mListener.listSize(stepListSize);
-//
-//                    mAdapter.updateSteps(mRecipe.getSteps());
-//                    populateIngredientsTV();
-//                    Log.d(TAG, "success");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-//                Log.d(TAG, "failure");
-//            }
-//        });
-//    }
 
     @Override
     public void onDetach() {
