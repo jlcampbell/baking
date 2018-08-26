@@ -1,6 +1,7 @@
 package com.campbell.jess.baking_app;
 
 import android.app.Application;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,6 +60,8 @@ public class VideoFragment extends Fragment {
     private RecipeService mService;
     private Recipe mRecipe;
 
+    private SharedViewModel mViewModel;
+
     private SimpleExoPlayer mExoPlayer;
     private PlayerView mPlayerView;
 
@@ -97,13 +100,16 @@ public class VideoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mService = ApiUtils.getRecipeService();
+        SharedViewModelFactory factory = InjectorUtils.provideSharedActivityViewModelFactory(getContext(), mRecipeId, getActivity().getApplication() );
+
+        mViewModel = ViewModelProviders.of(getActivity(), factory).get(SharedViewModel.class);
+
         if (getArguments() != null) {
             mRecipeId = getArguments().getInt(RECIPE_ID);
             mStepId = getArguments().getInt(STEP_ID);
             mStepVideo = getArguments().getString(STEP_VIDEO);
         }
-        //mPlayerView = (PlayerView) getActivity().findViewById(R.id.pv_video);
-        loadRecipes();
+        loadRecipeDataFromViewModel();
     }
 
     /**
@@ -162,8 +168,6 @@ public class VideoFragment extends Fragment {
     public void onActivityCreated(Bundle onSavedInstanceState){
         super.onActivityCreated(onSavedInstanceState);
         mPlayerView = getActivity().findViewById(R.id.pv_video);
-//        Uri uri = Uri.parse(mStepVideo);
-//        initializePlayer(uri);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -189,24 +193,11 @@ public class VideoFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-//TODO : move load out of here, load only when app opens and attach room to access recipe
-    public void loadRecipes(){
-        Log.d(TAG, "loadRecipes: loading recipes");
+    public void loadRecipeDataFromViewModel() {
 
-        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                if(response.isSuccessful()){
-                    mRecipe = response.body().get(mRecipeId);
-                    populateVideo();
-                    Log.d(TAG, "success");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d(TAG, "failure");
-            }
+        mViewModel.getRecipe().observe(this, recipe -> {
+            mRecipe = recipe;
+            populateVideo();
         });
     }
 

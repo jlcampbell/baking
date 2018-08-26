@@ -1,5 +1,9 @@
 package com.campbell.jess.baking_app;
 
+import android.app.Application;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,8 +21,7 @@ import com.campbell.jess.baking_app.data.model.Recipe;
 
 import com.campbell.jess.baking_app.data.remote.ApiUtils;
 import com.campbell.jess.baking_app.data.remote.RecipeService;
-import com.campbell.jess.baking_app.dummy.DummyContent;
-import com.campbell.jess.baking_app.dummy.DummyContent.DummyItem;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class RecipesFragment extends Fragment {
 
     private RecipeService mService;
     private MyRecipeRecyclerViewAdapter mAdapter;
+    private MainActivityViewModel mViewModel;
 
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(int position);
@@ -73,26 +77,16 @@ public class RecipesFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-
-        loadRecipes();
+        MainActivityViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(getActivity(), getActivity().getApplication());
+        mViewModel = ViewModelProviders.of(getActivity(), factory).get(MainActivityViewModel.class);
+        loadRecipeDataFromViewModel();
     }
 
-    public void loadRecipes(){
-        Log.d(TAG, "loadRecipes: loading recipes");
-        mService.getRecipes().enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                if(response.isSuccessful()){
-                    mAdapter.updateRecipes(response.body());
-                    Log.d(TAG, "success");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d(TAG, "failure");
-            }
-        });
+    public void loadRecipeDataFromViewModel() {
+        final Observer<List<Recipe>> recipeObserver= listLiveData -> {
+            mAdapter.updateRecipes(listLiveData);
+        };
+        mViewModel.getRecipes().observe(this, recipeObserver);
     }
 
     @Override
