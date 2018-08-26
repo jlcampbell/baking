@@ -5,31 +5,55 @@ package com.campbell.jess.baking_app.data.model;
  */
 
 
+        import android.arch.persistence.room.Entity;
+        import android.arch.persistence.room.PrimaryKey;
+        import android.arch.persistence.room.TypeConverter;
+        import android.arch.persistence.room.TypeConverters;
+
         import java.util.List;
+
+        import com.campbell.jess.baking_app.data.RecipesTypeConverter;
         import com.google.gson.annotations.Expose;
         import com.google.gson.annotations.SerializedName;
 
-
+@Entity(tableName = "recipe_table")
 public class Recipe {
-
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private int id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("ingredients")
     @Expose
     private List<Ingredient> ingredients = null;
+
     @SerializedName("steps")
     @Expose
+    @TypeConverters(RecipesTypeConverter.class)
     private List<Step> steps = null;
+
     @SerializedName("servings")
     @Expose
     private Integer servings;
+
     @SerializedName("image")
     @Expose
     private String image;
+
+
+    public Recipe(int id, String name, List<Ingredient> ingredients, List<Step> steps, int servings, String image){
+        this.id = id;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.servings = servings;
+        this.image = image;
+    }
+
 
     public int getId() {
         return id;
