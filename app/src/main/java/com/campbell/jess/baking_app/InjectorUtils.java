@@ -6,7 +6,8 @@ import android.content.Context;
 import com.campbell.jess.baking_app.data.AppExecutors;
 import com.campbell.jess.baking_app.data.RecipeNetworkDataSource;
 import com.campbell.jess.baking_app.data.RecipeRepository;
-import com.campbell.jess.baking_app.data.RecipeRoomDatabase;
+import com.campbell.jess.baking_app.ui.main.MainActivityViewModelFactory;
+import com.campbell.jess.baking_app.ui.steps.SharedViewModelFactory;
 
 public class InjectorUtils {
     private static String log_tag = "injectorUtils";

@@ -1,9 +1,10 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.main;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.campbell.jess.baking_app.data.RecipeRepository;
+import com.campbell.jess.baking_app.ui.main.MainActivityViewModel;
 
 public class MainActivityViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final static String TAG = MainActivityViewModel.class.getSimpleName();

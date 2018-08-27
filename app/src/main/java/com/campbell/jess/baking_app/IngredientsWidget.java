@@ -11,11 +11,16 @@ import com.campbell.jess.baking_app.ui.steps.StepsActivity;
 
 /**
  * Implementation of App Widget functionality.
+ *
+ * need a ingredients switching service
+ * that determines which recipe we are currently looking at
+ *
+ *
  */
 public class IngredientsWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, String ingredients) {
+                                int appWidgetId) {
         //create intent to launch stepsActivity (where ingredients are located)
         Intent intent = new Intent(context, StepsActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

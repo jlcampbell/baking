@@ -1,9 +1,10 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.steps;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.campbell.jess.baking_app.data.RecipeRepository;
+import com.campbell.jess.baking_app.ui.steps.SharedViewModel;
 
 /**
  * Created by jlcampbell on 8/22/2018.

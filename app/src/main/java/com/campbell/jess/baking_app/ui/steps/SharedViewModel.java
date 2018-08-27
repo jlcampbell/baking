@@ -1,4 +1,4 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.ui.steps;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
