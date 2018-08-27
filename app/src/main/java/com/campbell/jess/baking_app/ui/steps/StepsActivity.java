@@ -72,6 +72,7 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
     @Override
     public void onListFragmentInteraction(int stepIndex) {
         Log.d(TAG, "click" + stepIndex);
+        //TODO call widget service to update widget ingredients
 
         //do different things depending on tablet/ phone
         if(mTwoPane){
