@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.campbell.jess.baking_app.InjectorUtils;
+import com.campbell.jess.baking_app.utils.InjectorUtils;
 import com.campbell.jess.baking_app.R;
 import com.campbell.jess.baking_app.ui.steps.SharedViewModel;
 import com.campbell.jess.baking_app.ui.steps.SharedViewModelFactory;

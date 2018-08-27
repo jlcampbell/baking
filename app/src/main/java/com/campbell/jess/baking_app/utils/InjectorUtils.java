@@ -1,4 +1,4 @@
-package com.campbell.jess.baking_app;
+package com.campbell.jess.baking_app.utils;
 
 import android.app.Application;
 import android.content.Context;

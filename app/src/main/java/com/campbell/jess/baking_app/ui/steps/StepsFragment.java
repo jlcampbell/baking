@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.campbell.jess.baking_app.InjectorUtils;
+import com.campbell.jess.baking_app.utils.InjectorUtils;
 import com.campbell.jess.baking_app.R;
 import com.campbell.jess.baking_app.data.model.Ingredient;
 import com.campbell.jess.baking_app.data.model.Recipe;
@@ -22,13 +22,6 @@ import com.campbell.jess.baking_app.data.remote.RecipeService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 public class StepsFragment extends Fragment {
     private RecipeService mService;

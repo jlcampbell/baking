@@ -1,15 +1,14 @@
 <resources>
     <string name="app_name">Baking_App</string>
-
-
     <string name="id">id</string>
     <string name="name">name</string>
     <string name="ingredients">ingredients</string>
     <string name="steps">steps</string>
     <string name="servings">servings</string>
     <string name="imageUrl">image</string>
-
+    <!--widgets-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="appwidget_text" translatable="false">Ingredients</string>
     <string name="add_widget">Add widget</string>
+
 </resources>
