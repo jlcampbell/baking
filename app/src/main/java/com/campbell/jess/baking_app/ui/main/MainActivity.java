@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.campbell.jess.baking_app.IngredientsUpdateService;
 import com.campbell.jess.baking_app.R;
 import com.campbell.jess.baking_app.ui.steps.StepsActivity;
 
@@ -40,5 +41,8 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
         intent.putExtras(b);
         startActivity(intent);
 
+        //update widget
+        //todo add code to update widget with the recipe we selected
+        IngredientsUpdateService.startActionUpdateIngredients(this, recipeIndex);
     }
 }

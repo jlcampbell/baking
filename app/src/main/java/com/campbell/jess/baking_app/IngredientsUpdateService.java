@@ -1,6 +1,8 @@
 package com.campbell.jess.baking_app;
 
 import android.app.IntentService;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -16,7 +18,6 @@ public class IngredientsUpdateService extends IntentService {
 
 //  this method can be called outside the class to trigger the ingredients text to be updated in
 //  the widget
-
     public static void startActionUpdateIngredients(Context context, int recipeId){
         Intent intent = new Intent(context, IngredientsUpdateService.class);
         intent.setAction(ACTION_UPDATE_INGREDIENTS);
@@ -38,7 +39,11 @@ public class IngredientsUpdateService extends IntentService {
     }
 
     private void handleActionUpdateIngredients(int recipeId) {
-
+//todo fill in body of recipe
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, IngredientsWidget.class));
+        //update all widgets
+        IngredientsWidget.updateIngredientWidgets(this, appWidgetManager, recipeId, appWidgetIds);
     }
 
 

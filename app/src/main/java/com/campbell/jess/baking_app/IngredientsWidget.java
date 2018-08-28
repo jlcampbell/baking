@@ -19,7 +19,7 @@ import com.campbell.jess.baking_app.ui.steps.StepsActivity;
  */
 public class IngredientsWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int recipeId,
                                 int appWidgetId) {
         //create intent to launch stepsActivity (where ingredients are located)
         Intent intent = new Intent(context, StepsActivity.class);
@@ -40,8 +40,12 @@ public class IngredientsWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
+//        IngredientsUpdateService.startActionUpdateIngredients(context);
+    }
+
+    public static void updateIngredientWidgets(Context context, AppWidgetManager appWidgetManager, int recipeId, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+            updateAppWidget(context, appWidgetManager, recipeId, appWidgetId);
         }
     }
 
