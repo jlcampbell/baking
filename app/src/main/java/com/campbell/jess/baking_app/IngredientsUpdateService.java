@@ -24,7 +24,6 @@ public class IngredientsUpdateService extends IntentService {
         context.startService(intent);
     };
 
-
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
@@ -36,6 +35,7 @@ public class IngredientsUpdateService extends IntentService {
             }
         }
     }
+//update ingredients widget in background thread
 
     private void handleActionUpdateIngredients(int recipeId) {
 

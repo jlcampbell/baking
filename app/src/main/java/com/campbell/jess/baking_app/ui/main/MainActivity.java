@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.campbell.jess.baking_app.IngredientsUpdateService;
 import com.campbell.jess.baking_app.R;
 import com.campbell.jess.baking_app.ui.steps.StepsActivity;
 
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
         final Intent intent = new Intent(this, StepsActivity.class);
         intent.putExtras(b);
         startActivity(intent);
+
+        //notify the widget that a new recipe has been selected
+        IngredientsUpdateService.startActionUpdateIngredients(getApplicationContext(), recipeIndex);
 
     }
 }
