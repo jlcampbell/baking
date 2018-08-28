@@ -23,6 +23,7 @@ public class IngredientsWidget extends AppWidgetProvider {
                                 int appWidgetId) {
         //create intent to launch stepsActivity (where ingredients are located)
         Intent intent = new Intent(context, StepsActivity.class);
+        intent.putExtra("recipeId",0);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         CharSequence widgetText = context.getString(R.string.appwidget_text);
@@ -30,6 +31,7 @@ public class IngredientsWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
 
+        views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

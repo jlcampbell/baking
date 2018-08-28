@@ -14,7 +14,9 @@ public class IngredientsUpdateService extends IntentService {
         super("UpdateIngredientsService");
     }
 
-//    this method can be called outside the class to trigger an update of the widget
+//  this method can be called outside the class to trigger the ingredients text to be updated in
+//  the widget
+
     public static void startActionUpdateIngredients(Context context, int recipeId){
         Intent intent = new Intent(context, IngredientsUpdateService.class);
         intent.setAction(ACTION_UPDATE_INGREDIENTS);
@@ -29,13 +31,13 @@ public class IngredientsUpdateService extends IntentService {
             final String action = intent.getAction();
             if(ACTION_UPDATE_INGREDIENTS.equals(action)) {
                 //TODO MAKE SURE INTENT COMES WITH recipe EXTRAS
-                final long recipeId = intent.getLongExtra(EXTRA_RECIPE_ID, 0);
-
+                final int recipeId = intent.getIntExtra(EXTRA_RECIPE_ID, 0);
+                handleActionUpdateIngredients(recipeId);
             }
         }
     }
 
-    private void handleActionUpdateIngredients() {
+    private void handleActionUpdateIngredients(int recipeId) {
 
     }
 
