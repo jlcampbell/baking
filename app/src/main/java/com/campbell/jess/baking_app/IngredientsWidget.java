@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.campbell.jess.baking_app.ui.main.MainActivity;
 import com.campbell.jess.baking_app.ui.steps.StepsActivity;
 
 /**
@@ -22,8 +23,8 @@ public class IngredientsWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int recipeId,
                                 int appWidgetId) {
         //create intent to launch stepsActivity (where ingredients are located)
-        Intent intent = new Intent(context, StepsActivity.class);
-        intent.putExtra("recipeId",0);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("recipeId",recipeId);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         CharSequence widgetText = context.getString(R.string.appwidget_text);
@@ -31,7 +32,7 @@ public class IngredientsWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
 
-        views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
+        views.setOnClickPendingIntent(R.id.button, pendingIntent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

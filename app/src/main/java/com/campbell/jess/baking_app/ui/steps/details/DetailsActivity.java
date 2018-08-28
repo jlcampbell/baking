@@ -26,7 +26,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsFragmen
         Button previousButton = (Button) findViewById(R.id.btn_previous);
 
         if (savedInstanceState == null) {
-            recipeId = getIntent().getIntExtra("recipe", 0);
+            recipeId = getIntent().getIntExtra(getString(R.string.EXTRA_RECIPE_ID), 0);
             stepId = getIntent().getIntExtra("step", 0);
             mStepSize = getIntent().getIntExtra("listSize", 0);
 

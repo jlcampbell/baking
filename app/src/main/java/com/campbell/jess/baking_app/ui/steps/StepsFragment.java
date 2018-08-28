@@ -93,6 +93,7 @@ public class StepsFragment extends Fragment {
 
         mViewModel.getRecipe().observe(this, recipe -> {
             mRecipe = recipe;
+            Log.d("Steps fragment", mRecipe.getName());
             populateUI();
         });
     }

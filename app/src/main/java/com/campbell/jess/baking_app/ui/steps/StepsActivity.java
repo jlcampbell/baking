@@ -36,7 +36,7 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
         if (findViewById(R.id.details_linear_layout) != null) {
             mTwoPane = true;
 
-            int recipeId = getIntent().getIntExtra("recipe", 0);
+            int recipeId = getIntent().getIntExtra("recipeId", 0);
             int stepId = 0;
 
             //launch using step instructions string instead
@@ -59,7 +59,7 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
         if(savedInstanceState == null){
             StepsFragment stepsFragment = new StepsFragment();
 
-            mRecipeId = getIntent().getIntExtra("recipe", 0);
+            mRecipeId = getIntent().getIntExtra(getString(R.string.EXTRA_RECIPE_ID), 0);
             stepsFragment.setRecipeId(mRecipeId);
 
             fragmentManager.beginTransaction()
@@ -89,7 +89,7 @@ public class StepsActivity extends AppCompatActivity implements StepsFragment.On
         } else {
             //make a bundle with the position
             Bundle b = new Bundle();
-            b.putInt("recipe", mRecipeId);
+            b.putInt(getString(R.string.EXTRA_RECIPE_ID), mRecipeId);
             b.putInt("step", stepIndex);
             b.putInt("listSize", mListSize);
 
