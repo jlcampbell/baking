@@ -11,4 +11,6 @@
     <string name="appwidget_text" translatable="false">Ingredients</string>
     <string name="add_widget">Add widget</string>
 
+    <!--intent extra for launching activities-->
+    <string name="EXTRA_RECIPE_ID">com.campbell.jess.baking_app.extra.RECIPE_ID</string>
 </resources>

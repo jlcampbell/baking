@@ -20,22 +20,19 @@ import com.campbell.jess.baking_app.ui.steps.StepsActivity;
  */
 public class IngredientsWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int recipeId, int appWidgetId) {
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int recipeId,
+                                int appWidgetId) {
         //create intent to launch stepsActivity (where ingredients are located)
-        Intent intent = new Intent(context, StepsActivity.class);
-        //need to figure out how to get the correct recipe from somewhere, and then sent intent to main activity
-
-        //TODO see plant demo correct naming
-        intent.putExtra("RECIPE_ID", recipeId);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("recipeId",recipeId);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
+        CharSequence widgetText = String.valueOf(recipeId);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
 
-        views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
+        views.setOnClickPendingIntent(R.id.button, pendingIntent);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -43,18 +40,15 @@ public class IngredientsWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        //start intent service update widget action
-        IngredientsUpdateService.startActionUpdateIngredients(context);
+        // There may be multiple widgets active, so update all of them
+//        IngredientsUpdateService.startActionUpdateIngredients(context);
     }
 
-    public static void updateRecipeWidgets(Context context, AppWidgetManager appWidgetManager,
-                                          int recipeId, int[] appWidgetIds){
-        // There may be multiple widgets active, so update all of them
+    public static void updateIngredientWidgets(Context context, AppWidgetManager appWidgetManager, int recipeId, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, recipeId, appWidgetId);
         }
     }
-
 
     @Override
     public void onEnabled(Context context) {

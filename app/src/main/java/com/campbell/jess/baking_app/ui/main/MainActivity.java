@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
     private String TAG = "main activity";
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +31,25 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
 
 
     @Override
-    public void onListFragmentInteraction(int recipeIndex) {
-        Log.d(TAG, "click" + recipeIndex);
+    public void onListFragmentInteraction(int position) {
+        Log.d(TAG, "position" + position);
+        int recipeIndex = position+1;
+
+        IngredientsUpdateService.startActionUpdateIngredients(this, recipeIndex );
+
+
+        Log.d(TAG, "recipe index" + recipeIndex);
         //make a bundle with the position
         Bundle b = new Bundle();
-        b.putInt("recipe", recipeIndex);
+        b.putInt(getString(R.string.EXTRA_RECIPE_ID), recipeIndex);
 
         //make an intent, add bundle to the event
         final Intent intent = new Intent(this, StepsActivity.class);
         intent.putExtras(b);
         startActivity(intent);
 
-        //notify the widget that a new recipe has been selected
-        IngredientsUpdateService.startActionUpdateIngredients(getApplicationContext(), recipeIndex);
-
+        //update widget
+        //todo add code to update widget with the recipe we selected
+        IngredientsUpdateService.startActionUpdateIngredients(this, recipeIndex);
     }
 }
